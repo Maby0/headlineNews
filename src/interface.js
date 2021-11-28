@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const list = document.getElementById('story-list'),
-    para = document.createElement('p');
+  const container1 = document.querySelector('.container1'),
+  container2 = document.querySelector('.container2'),
+  list = document.getElementById('story-list'),
+  para = document.createElement('p');
 
   fetchStories();
 
@@ -30,6 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
       img.src = element.image
       li.innerText = element.headline;
       li.appendChild(img)
+      li.addEventListener('click', () => {
+        container1.style.display = 'none'
+        container2.style.display = 'block'
+      })
       list.appendChild(li)
     })
   }
