@@ -1,24 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const list = document.getElementById('story-list');
+  const list = document.getElementById('story-list'),
+    para = document.createElement('p');
 
-  storyExtract();
+  fetchStories();
 
-  function storyExtract() {
+  function fetchStories() {
     fetch('https://ent9gi2ec4szjte.m.pipedream.net')
     .then((response) => {
       return response.json();
     }).then((data) => {
-        listMaker(data.message);
-        console.log(data.message);
-      });
+      let storyArray = [];
+      data.message.forEach(element => {
+        storyArray.push(new NewsArticle({
+          headline: element.webTitle,
+          image: element.fields.thumbnail,
+          body: element.fields.bodyText
+        }))
+      })
+      listMaker(storyArray);
+    });
   }
-      
+
   function listMaker(array) {
     let li;
     console.log(array);
     array.forEach(element => {
-      li = document.createElement('li') 
-      li.innerText = element.webTitle;
+      li = document.createElement('li')
+      img = document.createElement('img')
+      img.src = element.image
+      li.innerText = element.headline;
+      li.appendChild(img)
       list.appendChild(li)
     })
   }
